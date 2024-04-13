@@ -8,6 +8,7 @@ const urlSchema=new mongoose.Schema({
    redirectURL:{
     type:String,
     required:true,
+    default:"home",
    },
 
 visitHistory:[{timestamp:{type:Number}}],
