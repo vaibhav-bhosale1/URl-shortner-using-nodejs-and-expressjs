@@ -4,6 +4,8 @@ const {connecttomongodb}=require("./connect");
 const path=require('path');
 const urlRoute=require('./routes/url');
 const URL=require('./modules/url');
+const cookieparser=require('cookie-parser')
+const {checkforauthentication,restrictonly}=require('./middleware/auth')
 const staticrouter=require('./routes/staticrouter');
 const userroute=require("./routes/user");
 
@@ -30,13 +32,30 @@ app.get("/test",async (req,res)=>{
 //midleware
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(cookieparser());
+app.use(checkforauthentication);
 
 //routes
-app.use("/url",urlRoute);
+app.use("/url",restrictonly(["NORMAL"]),urlRoute);
 app.use("/",staticrouter);
 app.use("/user",userroute)
 
-
+app.get('/:shortId',async (req,res)=>{
+  const shortId=req.params.shortId;
+  const entry=await URL.findOneAndUpdate(
+    {
+      shortId,
+    },
+    {
+      $push:{
+        visitHistory:{
+          timestamp:Date.now(),
+        }
+      },
+    }
+  )
+ res.redirect(entry.redirectURL);
+})
 
 
 app.listen(port,()=>console.log("server started"));

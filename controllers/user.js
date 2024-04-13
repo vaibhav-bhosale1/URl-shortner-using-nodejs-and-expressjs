@@ -1,4 +1,6 @@
 const User=require('../modules/users');
+const {v4: uuidv4}=require('uuid');
+const{setuser}=require('../service/auth');
 
 async  function createusersignup(req,res){
     const {name,email,password}=req.body;
@@ -18,6 +20,9 @@ async  function createuserlogin(req,res){
             error:"invalid username or password"
         });
     }
+    
+    const token=setuser(user);
+    res.cookie("token",token);
     return res.redirect("/");
 
 }

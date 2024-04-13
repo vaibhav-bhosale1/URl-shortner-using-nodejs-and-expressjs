@@ -9,7 +9,7 @@ const shortID=shortid();
    
     await URL.create({
         shortId:shortID,
-        redirectURL: body.url,
+        redirectURL:body.url,
         visitedHistory: [],
     });
     return res.render('home',{
@@ -20,12 +20,7 @@ const shortID=shortid();
 }
 
 async function getanalytics(req,res){
-    const shortId=req.params.shortId;
-   const result=await URL.findOne({shortId});
- return res.json({
-    totalClicks: result.visitHistory.length, 
-    analytics: result.visitHistory})
-
+    return res.redirect();
 }
 module.exports={
     generateshorturl,

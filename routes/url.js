@@ -4,6 +4,6 @@ const {generateshorturl,getanalytics}=require("../controllers/url");
 
 
 router.post('/',generateshorturl);
-router.get('/analytics/:shortId',getanalytics);
+router.get('/url/:shortId',getanalytics);
 
 module.exports=router;

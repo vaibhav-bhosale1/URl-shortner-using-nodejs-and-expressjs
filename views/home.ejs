@@ -4,6 +4,8 @@
     <style>
         body{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            background-color: black;
         }
     </style>
     <meta charset="UTF-8">
@@ -11,9 +13,7 @@
     <title>Document</title>
 </head>
 <body>
-    <% if (locals.id) { %>
-     <p>URL genereated:http://localhost:8001/url/<%= id %></p>
-    <% } %>
+    
     <h1>URL shortner</h1>
     <div>
         <form method="post" action="url">
@@ -22,5 +22,8 @@
             <button type="submit">Generate</button>
     </form>
     </div>
+    <% if (locals.id) { %>
+        <p>URL genereated : <b>http://localhost:8001/<%= id %></b> </p>
+       <% } %>
 </body>
 </html>
